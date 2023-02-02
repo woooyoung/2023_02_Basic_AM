@@ -17,7 +17,7 @@ public class Main {
 		while (true) {
 
 			System.out.printf("명령어 ) ");
-			String command = sc.nextLine();
+			String command = sc.nextLine().trim();
 
 			if (command.length() == 0) {
 				System.out.println("명령어를 입력해주세요");
@@ -33,7 +33,11 @@ public class Main {
 					System.out.println("게시글이 없습니다");
 					continue;
 				} else {
-					System.out.println("있던데?");
+					System.out.println("번호    /     제목    ");
+					for (int i = articles.size() - 1; i >= 0; i--) {
+						Article article = articles.get(i);
+						System.out.printf("%d	/	%s\n", article.id, article.title);
+					}
 				}
 			} else if (command.equals("article write")) {
 				int id = lastArticleId + 1;
@@ -42,14 +46,11 @@ public class Main {
 				System.out.printf("내용 : ");
 				String body = sc.nextLine();
 
-//				System.out.printf("title : %s, body : %s\n", title, body);
-
 				Article article = new Article(id, title, body);
 				articles.add(article);
 
 				System.out.printf("%d번 글이 생성 되었습니다\n", id);
 				lastArticleId++;
-
 			}
 
 			else {
