@@ -32,12 +32,18 @@ public class Main {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
 					continue;
-				} else {
-					System.out.println("번호    /     제목    ");
-					for (int i = articles.size() - 1; i >= 0; i--) {
-						Article article = articles.get(i);
-						System.out.printf("%d	/	%s\n", article.id, article.title);
+				}
+				System.out.println("번호    /     제목    ");
+				String tempTitle = null;
+				for (int i = articles.size() - 1; i >= 0; i--) {
+					Article article = articles.get(i);
+					if (article.title.length() > 4) {
+						tempTitle = article.title.substring(0, 4);
+						System.out.printf("%d	/	%s\n", article.id, tempTitle + "...");
+						continue;
 					}
+
+					System.out.printf("%d	/	%s\n", article.id, article.title);
 				}
 			} else if (command.equals("article write")) {
 				int id = lastArticleId + 1;
