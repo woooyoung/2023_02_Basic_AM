@@ -48,33 +48,26 @@ public class Main {
 			} else if (command.equals("article write")) {
 				int id = lastArticleId + 1;
 				System.out.printf("제목 : ");
+				String regDate = Util.getNowDateStr();
 				String title = sc.nextLine();
 				System.out.printf("내용 : ");
 				String body = sc.nextLine();
 
-				Article article = new Article(id, title, body);
+				Article article = new Article(id, regDate, title, body);
 				articles.add(article);
 
 				System.out.printf("%d번 글이 생성 되었습니다\n", id);
 				lastArticleId++;
 			} else if (command.startsWith("article detail ")) {
-				String[] commandBits = command.split(" "); // article / detail / ~
-				// commandBits[0] => article
-				// commandBits[1] => detail
-				// commandBits[2] => ~
+				String[] commandBits = command.split(" ");
 
 				int id = Integer.parseInt(commandBits[2]);
-				// article detail 1 => "1" => 1
 
-//				boolean found = false;
 				Article foundArticle = null;
 
 				for (int i = 0; i < articles.size(); i++) {
-					// 0 , 1 , 2 -> index
-					// 1 , 2 , 3 -> id
 					Article article = articles.get(i);
 					if (article.id == id) {
-//						found = true;
 						foundArticle = article;
 						break;
 					}
@@ -86,7 +79,7 @@ public class Main {
 				}
 				System.out.println(id + "번 글은 존재합니다");
 				System.out.printf("번호 : %d\n", foundArticle.id);
-				System.out.printf("날짜 : 2023-12-12 12:12:12\n");
+				System.out.printf("날짜 : %s\n", foundArticle.regDate);
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.body);
 			}
@@ -105,11 +98,13 @@ public class Main {
 
 class Article {
 	int id;
+	String regDate;
 	String title;
 	String body;
 
-	Article(int id, String title, String body) {
+	Article(int id, String regDate, String title, String body) {
 		this.id = id;
+		this.regDate = regDate;
 		this.title = title;
 		this.body = body;
 	}
