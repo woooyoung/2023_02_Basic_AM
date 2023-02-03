@@ -57,6 +57,38 @@ public class Main {
 
 				System.out.printf("%d번 글이 생성 되었습니다\n", id);
 				lastArticleId++;
+			} else if (command.startsWith("article detail ")) {
+				String[] commandBits = command.split(" "); // article / detail / ~
+				// commandBits[0] => article
+				// commandBits[1] => detail
+				// commandBits[2] => ~
+
+				int id = Integer.parseInt(commandBits[2]);
+				// article detail 1 => "1" => 1
+
+//				boolean found = false;
+				Article foundArticle = null;
+
+				for (int i = 0; i < articles.size(); i++) {
+					// 0 , 1 , 2 -> index
+					// 1 , 2 , 3 -> id
+					Article article = articles.get(i);
+					if (article.id == id) {
+//						found = true;
+						foundArticle = article;
+						break;
+					}
+				}
+
+				if (foundArticle == null) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+					continue;
+				}
+				System.out.println(id + "번 글은 존재합니다");
+				System.out.printf("번호 : %d\n", foundArticle.id);
+				System.out.printf("날짜 : 2023-12-12 12:12:12\n");
+				System.out.printf("제목 : %s\n", foundArticle.title);
+				System.out.printf("내용 : %s\n", foundArticle.body);
 			}
 
 			else {
