@@ -53,7 +53,7 @@ public class Main {
 				System.out.printf("내용 : ");
 				String body = sc.nextLine();
 
-				Article article = new Article(id, regDate, title, body);
+				Article article = new Article(id, regDate, regDate, title, body);
 				articles.add(article);
 
 				System.out.printf("%d번 글이 생성 되었습니다\n", id);
@@ -79,9 +79,42 @@ public class Main {
 				}
 
 				System.out.printf("번호 : %d\n", foundArticle.id);
-				System.out.printf("날짜 : %s\n", foundArticle.regDate);
+				System.out.printf("작성날짜 : %s\n", foundArticle.regDate);
+				System.out.printf("수정날짜 : %s\n", foundArticle.updateDate);
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.body);
+			} else if (command.startsWith("article modify ")) {
+				String[] commandBits = command.split(" ");
+
+				int id = Integer.parseInt(commandBits[2]);
+
+				Article foundArticle = null;
+
+				for (int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i);
+					if (article.id == id) {
+						foundArticle = article;
+						break;
+					}
+				}
+
+				if (foundArticle == null) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+					continue;
+				}
+
+				System.out.printf("제목 : ");
+				String title = sc.nextLine();
+				System.out.printf("내용 : ");
+				String body = sc.nextLine();
+				String updateDate = Util.getNowDateStr();
+
+				foundArticle.title = title;
+				foundArticle.body = body;
+				foundArticle.updateDate = updateDate;
+
+				System.out.printf("%d번 게시물을 수정했습니다\n", id);
+
 			} else if (command.startsWith("article delete ")) {
 				String[] commandBits = command.split(" ");
 
@@ -101,9 +134,6 @@ public class Main {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
 					continue;
 				}
-				// size() -> 3
-				// index : 0, 1, 2
-				// id : 1, 2, 3
 				articles.remove(foundIndex);
 				System.out.printf("%d번 게시물을 삭제했습니다\n", id);
 
@@ -124,12 +154,14 @@ public class Main {
 class Article {
 	int id;
 	String regDate;
+	String updateDate;
 	String title;
 	String body;
 
-	Article(int id, String regDate, String title, String body) {
+	Article(int id, String regDate, String updateDate, String title, String body) {
 		this.id = id;
 		this.regDate = regDate;
+		this.updateDate = updateDate;
 		this.title = title;
 		this.body = body;
 	}
