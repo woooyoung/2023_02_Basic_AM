@@ -5,13 +5,16 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.KoreaIT.java.BasicAM.dto.Article;
+import com.KoreaIT.java.BasicAM.dto.Member;
 import com.KoreaIT.java.BasicAM.util.Util;
 
 public class App {
 	public static List<Article> articles;
+	public static List<Member> members;
 
 	static {
 		articles = new ArrayList<>();
+		members = new ArrayList<>();
 	}
 
 	public void run() {
@@ -35,7 +38,36 @@ public class App {
 				break;
 			}
 
-			if (command.equals("article list")) {
+			if (command.equals("member join")) {
+				int id = members.size() + 1;
+				String regDate = Util.getNowDateStr();
+				System.out.printf("로그인 아이디 : ");
+				String loginId = sc.nextLine();
+
+				String loginPw = null;
+				String loginPwConfirm = null;
+				while (true) {
+					System.out.printf("로그인 비밀번호 : ");
+					loginPw = sc.nextLine();
+					System.out.printf("로그인 비밀번호 확인: ");
+					loginPwConfirm = sc.nextLine();
+
+					if (loginPw.equals(loginPwConfirm) == false) {
+						System.out.println("비밀번호를 다시 입력해주세요");
+						continue;
+					}
+
+					break;
+				}
+				System.out.printf("이름 : ");
+				String name = sc.nextLine();
+
+				Member member = new Member(id, regDate, regDate, loginId, loginPw, name);
+				members.add(member);
+
+				System.out.printf("%d번 회원이 가입 되었습니다\n", id);
+
+			} else if (command.equals("article list")) {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
 					continue;
@@ -54,8 +86,8 @@ public class App {
 				}
 			} else if (command.equals("article write")) {
 				int id = articles.size() + 1;
-				System.out.printf("제목 : ");
 				String regDate = Util.getNowDateStr();
+				System.out.printf("제목 : ");
 				String title = sc.nextLine();
 				System.out.printf("내용 : ");
 				String body = sc.nextLine();
@@ -148,21 +180,7 @@ public class App {
 	}
 
 	public Article getArticleById(int id) {
-		// 1
-//		for (int i = 0; i < articles.size(); i++) {
-//			Article article = articles.get(i);
-//			if (article.id == id) {
-//				return article;
-//			}
-//		}
 
-		// 2
-//		for (Article article : articles) {
-//			if (article.id == id) {
-//				return article;
-//			}
-//		}
-		// 3
 		int index = getArticleIndexById(id);
 
 		if (index != -1) {
