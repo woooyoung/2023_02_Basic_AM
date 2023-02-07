@@ -19,8 +19,6 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 
-		int lastArticleId = 0;
-
 		while (true) {
 
 			System.out.printf("명령어 ) ");
@@ -53,7 +51,7 @@ public class Main {
 					System.out.printf("%4d	/    %6s    /   %4d\n", article.id, article.title, article.hit);
 				}
 			} else if (command.equals("article write")) {
-				int id = lastArticleId + 1;
+				int id = articles.size() + 1;
 				System.out.printf("제목 : ");
 				String regDate = Util.getNowDateStr();
 				String title = sc.nextLine();
@@ -64,7 +62,6 @@ public class Main {
 				articles.add(article);
 
 				System.out.printf("%d번 글이 생성 되었습니다\n", id);
-				lastArticleId++;
 			} else if (command.startsWith("article detail ")) {
 				String[] commandBits = command.split(" ");
 
@@ -161,6 +158,10 @@ public class Main {
 
 	static void makeTestData() {
 		System.out.println("테스트를 위한 데이터를 생성합니다");
+
+		articles.add(new Article(1, Util.getNowDateStr(), Util.getNowDateStr(), "제목1", "내용1", 11));
+		articles.add(new Article(2, Util.getNowDateStr(), Util.getNowDateStr(), "제목2", "내용2", 22));
+		articles.add(new Article(3, Util.getNowDateStr(), Util.getNowDateStr(), "제목3", "내용3", 33));
 	}
 }
 
@@ -173,12 +174,16 @@ class Article {
 	int hit;
 
 	Article(int id, String regDate, String updateDate, String title, String body) {
+		this(id, regDate, updateDate, title, body, 0);
+	}
+
+	Article(int id, String regDate, String updateDate, String title, String body, int hit) {
 		this.id = id;
 		this.regDate = regDate;
 		this.updateDate = updateDate;
 		this.title = title;
 		this.body = body;
-		this.hit = 0;
+		this.hit = hit;
 	}
 
 	void increaseHit() {
