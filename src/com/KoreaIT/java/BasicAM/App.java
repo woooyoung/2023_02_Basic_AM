@@ -41,8 +41,19 @@ public class App {
 			if (command.equals("member join")) {
 				int id = members.size() + 1;
 				String regDate = Util.getNowDateStr();
-				System.out.printf("로그인 아이디 : ");
-				String loginId = sc.nextLine();
+
+				String loginId = null;
+				while (true) {
+					System.out.printf("로그인 아이디 : ");
+					loginId = sc.nextLine();
+
+					if (isJoinableLoginId(loginId) == false) {
+						System.out.println("이미 사용중인 아이디입니다.");
+						continue;
+					}
+
+					break;
+				}
 
 				String loginPw = null;
 				String loginPwConfirm = null;
@@ -166,6 +177,28 @@ public class App {
 
 		sc.close();
 
+	}
+
+	private boolean isJoinableLoginId(String loginId) {
+
+		int index = getMemberIndexByLoginId(loginId);
+
+		if (index == -1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public int getMemberIndexByLoginId(String loginId) {
+		int i = 0;
+		for (Member member : members) {
+			if (member.loginId.equals(loginId)) {
+				return i;
+			}
+			i++;
+		}
+		return -1;
 	}
 
 	public int getArticleIndexById(int id) {
