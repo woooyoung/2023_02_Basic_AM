@@ -3,7 +3,7 @@ package com.KoreaIT.java.BasicAM.controller;
 import java.util.List;
 import java.util.Scanner;
 
-import com.KoreaIT.java.BasicAM.dto.Member;
+import com.KoreaIT.java.BasicAM.dto.Member; 
 import com.KoreaIT.java.BasicAM.util.Util;
 
 public class MemberController {
