@@ -1,9 +1,16 @@
 package com.KoreaIT.java.BasicAM.controller;
 
+import com.KoreaIT.java.BasicAM.dto.Member;
+
 public abstract class Controller {
+
+	public static Member loginedMember;
+
 	public abstract void doAction(String command, String actionMethodName);
 
-	public void makeTestData() {
+	public abstract void makeTestData();
 
+	public static boolean isLogined() {
+		return loginedMember != null;
 	}
 }
