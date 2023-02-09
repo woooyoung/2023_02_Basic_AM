@@ -1,5 +1,6 @@
 package com.KoreaIT.java.BasicAM.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,8 +14,8 @@ public class MemberController extends Controller {
 	private String command;
 	private String actionMethodName;
 
-	public MemberController(List<Member> members, Scanner sc) {
-		this.members = members;
+	public MemberController(Scanner sc) {
+		this.members = new ArrayList<>();
 		this.sc = sc;
 	}
 

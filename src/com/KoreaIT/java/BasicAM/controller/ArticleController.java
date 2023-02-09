@@ -1,5 +1,6 @@
 package com.KoreaIT.java.BasicAM.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,8 +14,8 @@ public class ArticleController extends Controller {
 	private String command;
 	private String actionMethodName;
 
-	public ArticleController(List<Article> articles, Scanner sc) {
-		this.articles = articles;
+	public ArticleController(Scanner sc) {
+		this.articles = new ArrayList<>();
 		this.sc = sc;
 	}
 
@@ -41,7 +42,15 @@ public class ArticleController extends Controller {
 		}
 	}
 
-	public void showList() {
+	public void makeTestData() {
+		System.out.println("테스트를 위한 데이터를 생성합니다");
+
+		articles.add(new Article(1, Util.getNowDateStr(), Util.getNowDateStr(), "제목1", "내용1", 11));
+		articles.add(new Article(2, Util.getNowDateStr(), Util.getNowDateStr(), "제목2", "내용2", 22));
+		articles.add(new Article(3, Util.getNowDateStr(), Util.getNowDateStr(), "제목3", "내용3", 33));
+	}
+
+	private void showList() {
 		if (articles.size() == 0) {
 			System.out.println("게시글이 없습니다");
 			return;
@@ -61,7 +70,7 @@ public class ArticleController extends Controller {
 
 	}
 
-	public void doWrite() {
+	private void doWrite() {
 		int id = articles.size() + 1;
 		String regDate = Util.getNowDateStr();
 		System.out.printf("제목 : ");
@@ -73,10 +82,9 @@ public class ArticleController extends Controller {
 		articles.add(article);
 
 		System.out.printf("%d번 글이 생성 되었습니다\n", id);
-
 	}
 
-	public void showDetail() {
+	private void showDetail() {
 		String[] commandBits = command.split(" ");
 
 		int id = Integer.parseInt(commandBits[2]);
@@ -98,7 +106,7 @@ public class ArticleController extends Controller {
 
 	}
 
-	public void doModify() {
+	private void doModify() {
 		String[] commandBits = command.split(" ");
 
 		int id = Integer.parseInt(commandBits[2]);
@@ -124,7 +132,7 @@ public class ArticleController extends Controller {
 
 	}
 
-	public void doDelete() {
+	private void doDelete() {
 		String[] commandBits = command.split(" ");
 
 		int id = Integer.parseInt(commandBits[2]);
@@ -140,7 +148,7 @@ public class ArticleController extends Controller {
 
 	}
 
-	public int getArticleIndexById(int id) {
+	private int getArticleIndexById(int id) {
 		int i = 0;
 		for (Article article : articles) {
 			if (article.id == id) {
@@ -151,7 +159,7 @@ public class ArticleController extends Controller {
 		return -1;
 	}
 
-	public Article getArticleById(int id) {
+	private Article getArticleById(int id) {
 
 		int index = getArticleIndexById(id);
 
