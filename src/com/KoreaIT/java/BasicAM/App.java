@@ -43,7 +43,7 @@ public class App {
 				break;
 			}
 
-			String[] commandBits = command.split(" "); // article detail 1 / member join
+			String[] commandBits = command.split(" ");
 
 			if (commandBits.length == 1) {
 				System.out.println("명령어 확인 후 다시 입력해주세요");
@@ -65,23 +65,6 @@ public class App {
 			}
 
 			controller.doAction(command, actionMethodName);
-
-//			if (command.equals("member join")) {
-//				memberController.doJoin();
-//			} else if (command.equals("article list")) {
-//				articleController.showList();
-//			} else if (command.equals("article write")) {
-//				articleController.doWrite();
-//			} else if (command.startsWith("article detail ")) {
-//				articleController.showDetail(command);
-//			} else if (command.startsWith("article modify ")) {
-//				articleController.doModify(command);
-//			} else if (command.startsWith("article delete ")) {
-//				articleController.doDelete(command);
-//			}
-//			else {
-//				System.out.println("존재하지 않는 명령어입니다");
-//			}
 
 		}
 
