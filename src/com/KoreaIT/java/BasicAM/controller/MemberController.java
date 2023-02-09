@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.KoreaIT.java.BasicAM.dto.Article;
 import com.KoreaIT.java.BasicAM.dto.Member;
 import com.KoreaIT.java.BasicAM.util.Util;
 
@@ -43,8 +44,7 @@ public class MemberController extends Controller {
 		String loginId = sc.nextLine();
 		System.out.printf("로그인 비밀번호 : ");
 		String loginPw = sc.nextLine();
-		
-		// 사용자에게 입력은 로그인 아이디에 해당하는 회원이 나한테 있는지
+
 		Member member = getMemberByLoginId(loginId);
 
 		if (member == null) {
@@ -134,6 +134,14 @@ public class MemberController extends Controller {
 			i++;
 		}
 		return -1;
+	}
+
+	public void makeTestData() {
+		System.out.println("테스트를 위한 회원 데이터를 생성합니다");
+
+		members.add(new Member(1, Util.getNowDateStr(), Util.getNowDateStr(), "admin", "admin", "관리자"));
+		members.add(new Member(2, Util.getNowDateStr(), Util.getNowDateStr(), "test1", "test1", "유저1"));
+		members.add(new Member(3, Util.getNowDateStr(), Util.getNowDateStr(), "test2", "test2", "유저2"));
 	}
 
 }
