@@ -6,6 +6,7 @@ import java.util.Scanner;
 import com.KoreaIT.java.BasicAM.container.Container;
 import com.KoreaIT.java.BasicAM.dto.Article;
 import com.KoreaIT.java.BasicAM.dto.Member;
+import com.KoreaIT.java.BasicAM.service.ArticleService;
 import com.KoreaIT.java.BasicAM.util.Util;
 
 public class ArticleController extends Controller {
@@ -14,9 +15,11 @@ public class ArticleController extends Controller {
 	private Scanner sc;
 	private String command;
 	private String actionMethodName;
+	private ArticleService articleService;
 
 	public ArticleController(Scanner sc) {
-		this.articles = Container.articleDao.articles;
+		this.articleService = Container.articleService;
+		this.articles = Container.articleService.getArticles();
 		this.sc = sc;
 	}
 
@@ -49,9 +52,9 @@ public class ArticleController extends Controller {
 	public void makeTestData() {
 		System.out.println("테스트를 위한 게시글 데이터를 생성합니다");
 
-		articles.add(new Article(1, Util.getNowDateStr(), Util.getNowDateStr(), 1, "제목1", "내용1", 11));
-		articles.add(new Article(2, Util.getNowDateStr(), Util.getNowDateStr(), 2, "제목2", "내용2", 22));
-		articles.add(new Article(3, Util.getNowDateStr(), Util.getNowDateStr(), 3, "제목3", "내용3", 33));
+		Container.articleService.add(new Article(1, Util.getNowDateStr(), Util.getNowDateStr(), 1, "제목1", "내용1", 11));
+		Container.articleService.add(new Article(2, Util.getNowDateStr(), Util.getNowDateStr(), 2, "제목2", "내용2", 22));
+		Container.articleService.add(new Article(3, Util.getNowDateStr(), Util.getNowDateStr(), 3, "제목3", "내용3", 33));
 	}
 
 	private void showList() {
@@ -97,7 +100,7 @@ public class ArticleController extends Controller {
 		String body = sc.nextLine();
 
 		Article article = new Article(id, regDate, regDate, loginedMember.id, title, body);
-		articles.add(article);
+		Container.articleService.add(article);
 
 		System.out.printf("%d번 글이 생성 되었습니다\n", id);
 	}
@@ -107,7 +110,7 @@ public class ArticleController extends Controller {
 
 		int id = Integer.parseInt(commandBits[2]);
 
-		Article foundArticle = getArticleById(id);
+		Article foundArticle = articleService.getArticleById(id);
 
 		if (foundArticle == null) {
 			System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -130,7 +133,7 @@ public class ArticleController extends Controller {
 
 		int id = Integer.parseInt(commandBits[2]);
 
-		Article foundArticle = getArticleById(id);
+		Article foundArticle = articleService.getArticleById(id);
 
 		if (foundArticle == null) {
 			System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -161,7 +164,7 @@ public class ArticleController extends Controller {
 
 		int id = Integer.parseInt(commandBits[2]);
 
-		Article foundArticle = getArticleById(id);
+		Article foundArticle = articleService.getArticleById(id);
 
 		if (foundArticle == null) {
 			System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -173,31 +176,9 @@ public class ArticleController extends Controller {
 			return;
 		}
 
-		articles.remove(foundArticle);
+		Container.articleService.remove(foundArticle);
 		System.out.printf("%d번 게시물을 삭제했습니다\n", id);
 
-	}
-
-	private int getArticleIndexById(int id) {
-		int i = 0;
-		for (Article article : articles) {
-			if (article.id == id) {
-				return i;
-			}
-			i++;
-		}
-		return -1;
-	}
-
-	private Article getArticleById(int id) {
-
-		int index = getArticleIndexById(id);
-
-		if (index != -1) {
-			return articles.get(index);
-		}
-
-		return null;
 	}
 
 }
