@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.KoreaIT.java.BasicAM.container.Container;
 import com.KoreaIT.java.BasicAM.dto.Article;
+import com.KoreaIT.java.BasicAM.dto.Member;
 import com.KoreaIT.java.BasicAM.util.Util;
 
 public class ArticleController extends Controller {
@@ -62,15 +63,27 @@ public class ArticleController extends Controller {
 		String tempTitle = null;
 		for (int i = articles.size() - 1; i >= 0; i--) {
 			Article article = articles.get(i);
+
+			String writerName = null;
+
+			List<Member> members = Container.memberDao.members;
+
+			for (Member member : members) {
+				if (article.memberId == member.id) {
+					writerName = member.name;
+					break;
+				}
+			}
+
 			if (article.title.length() > 4) {
 				tempTitle = article.title.substring(0, 4);
-				System.out.printf("%4d	/    %6s    /   %4d	/    %6d\n", article.id, tempTitle + "...", article.hit,
-						article.memberId);
+				System.out.printf("%4d	/    %6s    /   %4d	/    %6s\n", article.id, tempTitle + "...", article.hit,
+						writerName);
 				continue;
 			}
 
-			System.out.printf("%4d	/    %6s    /   %4d	/    %6d\n", article.id, article.title, article.hit,
-					article.memberId);
+			System.out.printf("%4d	/    %6s    /   %4d	/    %6s\n", article.id, article.title, article.hit,
+					writerName);
 		}
 
 	}
